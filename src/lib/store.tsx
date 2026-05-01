@@ -131,8 +131,14 @@ function normalizeTask(task: any): Task {
 }
 
 async function parseResponse(res: Response) {
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.message || "Request failed");
+  const isJson = res.headers.get("content-type")?.includes("application/json");
+  const data = isJson ? await res.json().catch(() => ({})) : {};
+  if (!res.ok) {
+    if (!isJson && res.status >= 500) {
+      throw new Error(`Backend server error (${res.status}). It might be waking up or crashing on Render.`);
+    }
+    throw new Error(data.message || `Request failed with status ${res.status}`);
+  }
   return data;
 }
 
