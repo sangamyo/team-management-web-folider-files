@@ -1,26 +1,304 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #040712;
+  --foreground: #f7fbff;
+  --panel: rgba(10, 18, 42, 0.68);
+  --line: rgba(132, 204, 255, 0.22);
+  --cyan: #22d3ee;
+  --violet: #8b5cf6;
+  --blue: #38bdf8;
+  --fuchsia: #d946ef;
+  --emerald: #34d399;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ── Base ─────────────────────────────────────────────────────── */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+* { box-sizing: border-box; }
+
+::selection {
+  background: rgba(34, 211, 238, 0.35);
+  color: white;
+}
+
+/* ── Aurora Background ────────────────────────────────────────── */
+.aurora-bg {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.18), transparent 30%),
+    radial-gradient(circle at 80% 0%, rgba(139, 92, 246, 0.18), transparent 34%),
+    radial-gradient(circle at 60% 80%, rgba(217, 70, 239, 0.08), transparent 30%),
+    linear-gradient(145deg, #030511 0%, #07112a 45%, #040712 100%);
+}
+
+/* ── Mesh Grid ────────────────────────────────────────────────── */
+.mesh-grid {
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.09) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, transparent, black 20%, black 70%, transparent);
+}
+
+/* ── Glass Panel ──────────────────────────────────────────────── */
+.glass-panel {
+  border: 1px solid var(--line);
+  background: linear-gradient(145deg, rgba(13, 24, 55, 0.76), rgba(8, 12, 27, 0.58));
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(22px);
+}
+
+/* ── Holographic Card ─────────────────────────────────────────── */
+.holo-card {
+  border: 1px solid rgba(125, 211, 252, 0.22);
+  background:
+    linear-gradient(140deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.03)),
+    rgba(8, 14, 34, 0.62);
+  box-shadow: 0 20px 70px rgba(14, 165, 233, 0.14);
+  backdrop-filter: blur(18px);
+  transition: transform 350ms cubic-bezier(.2,.8,.3,1), box-shadow 350ms ease, border-color 350ms ease;
+}
+
+.holo-card:hover {
+  transform: translateY(-4px) scale(1.015);
+  box-shadow: 0 28px 80px rgba(14, 165, 233, 0.22), 0 0 40px rgba(34, 211, 238, 0.08);
+  border-color: rgba(34, 211, 238, 0.35);
+}
+
+/* ── Neon Text ────────────────────────────────────────────────── */
+.neon-text {
+  text-shadow: 0 0 26px rgba(34, 211, 238, 0.55);
+}
+
+/* ── Magnetic Button ──────────────────────────────────────────── */
+.magnetic {
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.magnetic::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.magnetic:hover {
+  transform: translateY(-2px) scale(1.015);
+  box-shadow: 0 18px 48px rgba(34, 211, 238, 0.24);
+}
+
+.magnetic:hover::after {
+  opacity: 1;
+}
+
+/* ── 3D Perspective Card ──────────────────────────────────────── */
+.perspective-card {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.perspective-card-inner {
+  transition: transform 400ms cubic-bezier(.2,.8,.3,1);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* ── Liquid Hover Effect ──────────────────────────────────────── */
+.liquid-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-hover::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.15), transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 600ms ease, height 600ms ease;
+  z-index: 0;
+}
+
+.liquid-hover:hover::before {
+  width: 300%;
+  height: 300%;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────── */
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(34, 211, 238, 0.2);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 211, 238, 0.4);
+}
+
+/* ── Keyframe Animations ─────────────────────────────────────── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float 8s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(34, 211, 238, 0.15); }
+  50% { box-shadow: 0 0 40px rgba(34, 211, 238, 0.35), 0 0 80px rgba(34, 211, 238, 0.1); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 6s ease infinite;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+@keyframes border-flow {
+  0% { border-color: rgba(34, 211, 238, 0.3); }
+  33% { border-color: rgba(139, 92, 246, 0.3); }
+  66% { border-color: rgba(217, 70, 239, 0.3); }
+  100% { border-color: rgba(34, 211, 238, 0.3); }
+}
+
+.animate-border-flow {
+  animation: border-flow 4s ease infinite;
+}
+
+@keyframes typewriter-cursor {
+  0%, 100% { border-right-color: var(--cyan); }
+  50% { border-right-color: transparent; }
+}
+
+/* ── Status Badges ────────────────────────────────────────────── */
+.badge-critical { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.2); }
+.badge-high { background: rgba(251, 146, 60, 0.15); color: #fdba74; border: 1px solid rgba(251, 146, 60, 0.2); }
+.badge-medium { background: rgba(34, 211, 238, 0.15); color: #a5f3fc; border: 1px solid rgba(34, 211, 238, 0.2); }
+.badge-low { background: rgba(52, 211, 153, 0.15); color: #6ee7b7; border: 1px solid rgba(52, 211, 153, 0.2); }
+
+.badge-elite { background: rgba(34, 211, 238, 0.15); color: #a5f3fc; }
+.badge-on-track { background: rgba(52, 211, 153, 0.15); color: #6ee7b7; }
+.badge-needs-focus { background: rgba(251, 146, 60, 0.15); color: #fdba74; }
+.badge-at-risk { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
+
+/* ── Glow Orbs ────────────────────────────────────────────────── */
+.glow-orb {
+  position: relative;
+}
+
+.glow-orb::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--cyan), var(--violet), var(--fuchsia), var(--cyan));
+  opacity: 0.3;
+  filter: blur(12px);
+  z-index: -1;
+  animation: spin-slow 8s linear infinite;
+}
+
+/* ── Cyber Line ───────────────────────────────────────────────── */
+.cyber-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0.3;
+}
+
+/* ── Progress Ring ────────────────────────────────────────────── */
+.progress-ring-bg {
+  stroke: rgba(255, 255, 255, 0.06);
+}
+
+.progress-ring-fill {
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.4));
 }
