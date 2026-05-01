@@ -5,7 +5,9 @@ import { AppShell } from "@/components/AppShell";
 import { FloatingCard } from "@/components/FloatingCard";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { ProgressRing } from "@/components/ProgressRing";
-import { ExperienceScene } from "@/components/ExperienceScene";
+import dynamic from "next/dynamic";
+
+const ExperienceScene = dynamic(() => import("@/components/ExperienceScene").then(m => m.ExperienceScene), { ssr: false });
 import { ProjectModal } from "@/components/ProjectModal";
 import { motion } from "framer-motion";
 import { useApp } from "@/lib/store";

@@ -178,7 +178,7 @@ export function AppShell({ children, title }: { children: React.ReactNode; title
                 onClick={() => router.push("/profile")}
                 className="hidden size-10 place-items-center rounded-full border border-cyan-200/20 bg-cyan-300/15 text-sm font-semibold text-cyan-100 shadow-[0_0_20px_rgba(34,211,238,0.2)] transition hover:bg-cyan-300/25 hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] sm:grid cursor-pointer"
               >
-                {user.name.split(" ").map((part) => part[0]).join("").slice(0, 2).toUpperCase()}
+                {user.name ? user.name.split(" ").map((part) => part[0]).join("").slice(0, 2).toUpperCase() : "QT"}
               </button>
             </div>
           </div>

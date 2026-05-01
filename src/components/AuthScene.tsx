@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, LockKeyhole, Mail, UserRound, Eye, EyeOff } from "lucide-react";
-import { ExperienceScene } from "@/components/ExperienceScene";
+import dynamic from "next/dynamic";
+
+const ExperienceScene = dynamic(() => import("@/components/ExperienceScene").then(m => m.ExperienceScene), { ssr: false });
 import { ParticleField } from "@/components/ParticleField";
 import { useState } from "react";
 import { useRouter } from "next/navigation";

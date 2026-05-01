@@ -2,7 +2,7 @@
 
 import { Float, MeshDistortMaterial, OrbitControls, Stars, Text } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Suspense, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import type { Group, Mesh } from "three";
 
 function Core() {
@@ -72,6 +72,11 @@ function OrbitingWidgets() {
 }
 
 export function ExperienceScene({ compact = false }: { compact?: boolean }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
   return (
     <div className={compact ? "h-[300px] w-full" : "absolute inset-0 -z-0 h-full w-full"}>
       <Canvas camera={{ position: [0, 0, 6], fov: 48 }} dpr={[1, 1.7]}>

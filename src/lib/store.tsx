@@ -25,7 +25,8 @@ const ACCENTS = [
 
 const INITIAL_STATE: AppState = { projects: [], tasks: [], members: [] };
 
-function initials(name = "QT") {
+function initials(name: string | null = "QT") {
+  if (!name || typeof name !== "string") return "QT";
   return name
     .split(" ")
     .filter(Boolean)
@@ -230,7 +231,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const savedToken = localStorage.getItem(TOKEN_KEY);
     const savedUser = localStorage.getItem(USER_KEY);
     if (savedToken) setToken(savedToken);
-    if (savedUser) setUser(JSON.parse(savedUser));
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (e) {
+        localStorage.removeItem(USER_KEY);
+      }
+    }
     refresh();
   }, [refresh]);
 
