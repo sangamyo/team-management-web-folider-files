@@ -10,7 +10,14 @@ import React, {
 } from "react";
 import type { AppState, AuthUser, Health, Member, Priority, Project, Task, TaskStatus } from "./types";
 
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/api`;
+function getApiUrl() {
+  let url = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+  if (!url.startsWith("http")) url = `https://${url}`;
+  if (url.endsWith("/")) url = url.slice(0, -1);
+  if (url.endsWith("/api")) url = url.slice(0, -4);
+  return `${url}/api`;
+}
+const API_URL = getApiUrl();
 const TOKEN_KEY = "quantum-teams-token";
 const USER_KEY = "quantum-teams-user";
 
